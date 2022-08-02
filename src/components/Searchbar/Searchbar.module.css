@@ -1,0 +1,68 @@
+.header {
+  top: 0;
+  left: 0;
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #acfc00dc;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.form__btn {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 0;
+  background-image: url('https://raw.githubusercontent.com/vadymfrlv/storage/bf122d30ec7deff66d71ff90cd7954d15f306163/homeworks/search.svg');
+  background-size: 50%;
+  background-color: rgba(0, 21, 255, 0.7);
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.form__btn:hover,
+.form__btn:focus {
+  opacity: 1;
+}
+
+.form__btnLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+.from__input {
+  display: inline-block;
+  width: 100%;
+  font: inherit;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #3c3c3c;
+}
