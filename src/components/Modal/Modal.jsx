@@ -1,48 +1,38 @@
-import React, { Component } from 'react';
+import { memo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 
-const modalRoot = document.querySelector('#modal-root');
+const modalRoot = document.getElementById('modal-root');
 
-class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.closeModal);
-  }
+const Modal = ({ handleClose, children }) => {
+  useEffect(() => {
+    const close = e => {
+      if (e.code === 'Escape') {
+        return handleClose();
+      }
+    };
+    document.addEventListener('keydown', close);
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.closeModal);
-  }
+    return () => document.removeEventListener('keydown', close);
+  }, [handleClose]);
 
-  closeModal = evt => {
-    if (evt.code === 'Escape') {
-      this.props.onClose();
+  const close = e => {
+    if (e.target === e.currentTarget) {
+      handleClose();
     }
   };
 
-  clickBackdrop = evt => {
-    if (evt.target.nodeName !== 'IMG') {
-      this.props.onClose();
-    }
-  };
-
-  render() {
-    const { largeImage } = this.props;
-
-    return createPortal(
-      <div className={styles.backdrop} onClick={this.clickBackdrop}>
-        <div className={styles.modal}>
-          <img src={largeImage} alt="" />
-        </div>
-      </div>,
-      modalRoot
-    );
-  }
-}
-
-Modal.propTypes = {
-  largeImage: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
+  return createPortal(
+    <div onClick={close} className={styles.backdrop}>
+      <div className={styles.modal}>{children}</div>
+    </div>,
+    modalRoot
+  );
 };
 
-export default Modal;
+Modal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+};
+
+export default memo(Modal);

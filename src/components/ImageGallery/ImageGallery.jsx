@@ -1,30 +1,26 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from './ImageGalleryItem';
 import styles from './ImageGallery.module.css';
 
-const ImageGallery = ({ images, onClick }) => {
-  return (
-    <ul className={styles.gallery__list}>
-      {images.map(image => (
-        <ImageGalleryItem
-          key={image.id}
-          smallImage={image.webformatURL}
-          largeImage={image.largeImageURL}
-          onClick={onClick}
-        />
-      ))}
-    </ul>
-  );
-};
+function ImageGallery({ images, onOpenModal }) {
+  const element = images.map(image => (
+    <ImageGalleryItem
+      onClick={() => onOpenModal(image)}
+      key={image.id}
+      image={image.webformatURL}
+    />
+  ));
+  return <ul className={styles.gallery__list}>{element}</ul>;
+}
 
 ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
     })
   ).isRequired,
+  onOpenModal: PropTypes.func.isRequired,
 };
 
-export default ImageGallery;
+export default memo(ImageGallery);
