@@ -12,6 +12,7 @@
 
 .inform {
   display: flex;
+  margin-top: 45px;
   margin-right: auto;
   margin-left: auto;
   font-size: 20px;

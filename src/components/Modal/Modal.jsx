@@ -5,34 +5,35 @@ import styles from './Modal.module.css';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Modal = ({ handleClose, children }) => {
+const Modal = ({ toggleModal, modal }) => {
   useEffect(() => {
-    const close = e => {
-      if (e.code === 'Escape') {
-        return handleClose();
+    const handleKeyDown = evt => {
+      if (evt.code === 'Escape') {
+        toggleModal();
       }
     };
-    document.addEventListener('keydown', close);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleModal]);
 
-    return () => document.removeEventListener('keydown', close);
-  }, [handleClose]);
-
-  const close = e => {
-    if (e.target === e.currentTarget) {
-      handleClose();
-    }
+  const handleCloseBackdrop = evt => {
+    if (evt.target.nodeName !== 'DIV') return;
+    toggleModal();
   };
 
   return createPortal(
-    <div onClick={close} className={styles.backdrop}>
-      <div className={styles.modal}>{children}</div>
+    <div className={styles.backdrop} onClick={handleCloseBackdrop}>
+      <div className={styles.modal}>
+        <img src={modal.src} alt={modal.alt} />
+      </div>
     </div>,
     modalRoot
   );
 };
 
 Modal.propTypes = {
-  handleClose: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  modal: PropTypes.object.isRequired,
 };
 
 export default memo(Modal);

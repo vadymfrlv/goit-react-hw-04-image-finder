@@ -10,7 +10,8 @@ const Button = ({ onLoadMore, text }) => {
 };
 
 Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default Button;
